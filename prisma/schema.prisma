@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+model Category {
+  categoryId Int    @id @default(autoincrement())
+  name       String @unique
+  photo      String
+  dishes     Dish[]
+}
+
+model Dish {
+  dishId     Int         @id @default(autoincrement())
+  name       String
+  photo      String
+  price      Int
+  state      String
+  category   Category    @relation(fields: [categoryId], references: [categoryId])
+  categoryId Int
+  ingredients Ingredient[]
+  orderDetails OrderDetail[]
+}
+
+model Ingredient {
+  ingredientId Int    @id @default(autoincrement())
+  name         String
+  quantity     String
+  require      Boolean
+  dish         Dish    @relation(fields: [dishId], references: [dishId])
+  dishId       Int
+  price        Int
+}
+
+model Order {
+  orderId   Int          @id @default(autoincrement())
+  state     String
+  createAt  String
+  updateAt  String
+  message   String
+  orderDetails OrderDetail[]
+}
+
+model OrderDetail {
+  orderDetailId Int      @id @default(autoincrement())
+  order         Order    @relation(fields: [orderId], references: [orderId])
+  orderId  Int
+  dish          Dish     @relation(fields: [dishId], references: [dishId])
+  dishId    Int
+  quantity      Int
+  additions     Json
+  exceptions    Json
+  message       String
+}

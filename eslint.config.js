@@ -29,7 +29,8 @@ export default tseslint.config(
     rules: {
       ...vitest.configs.recommended.rules,
       "@typescript-eslint/unbound-method": "off",
-      "@typescript-eslint/no-unsafe-call": "warn"
+      "@typescript-eslint/no-unsafe-call": "warn",
+      '@typescript-eslint/no-unsafe-assignment': 'off',
     },
   },
 );
